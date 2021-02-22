@@ -61,6 +61,5 @@ def pick_best_car_from_list(list_of_cars):
       best_car = list_of_cars[i]
   return best_car
 
-
 if __name__ == '__main__':
     app.run(debug = True) 
