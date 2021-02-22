@@ -1,5 +1,5 @@
-Vehicle Make-Model-Year, Type of vehicle (Gas or ZEV), km range/charge or litres/100km, Cost (CAD)
+Vehicle Make-Model-Year, km range/charge or litres/100km, Cost (CAD)
 
-Hyundai-KonaElectric-2021,ZEV,415,44999
-Tesla-Model3-2020,ZEV,568,52990
-Chevrolet-BoltEV-2021,ZEV,417,43090
+Hyundai-KonaElectric-2021,415,44999
+Tesla-Model3-2020,568,52990
+Chevrolet-BoltEV-2021,417,43090
