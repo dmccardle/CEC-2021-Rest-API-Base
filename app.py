@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from flask_marshmallow import Marshmallow
 import os
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -20,10 +21,13 @@ class CarSchema(ma.Schema):
 car_schema = CarSchema()
 cars_schema = CarSchema(many=True)
 
-@app.route('/')
+@app.route('/', methods = ['GET', 'POST'])
 def get_best_car():
+  request_data = json.loads(request.data)
+  min_price = int(request_data['minPrice'])
+
   cars = parse_car_data_from_file()
-  best_car = pick_best_car_from_list(cars)
+  best_car = pick_best_car_from_list(cars, min_price)
   return car_schema.jsonify(best_car)
 
 @app.route('/all')
@@ -51,14 +55,14 @@ def get_car_data_from_line(line):
   car = Car(car_name, car_mileage, car_cost)
   return car
 
-def pick_best_car_from_list(list_of_cars):
+def pick_best_car_from_list(list_of_cars, min_price):
   if not list_of_cars:
     return
   
-  best_car = list_of_cars[0]
-  for i in range(1, len(list_of_cars)):
-    if list_of_cars[i].cost < best_car.cost:
-      best_car = list_of_cars[i]
+  list_of_possible_cars = list(filter(lambda car: car.cost >= min_price, list_of_cars))
+  print(list_of_possible_cars)
+
+  best_car = min(list_of_possible_cars, key=lambda car: car.cost)
   return best_car
 
 if __name__ == '__main__':
